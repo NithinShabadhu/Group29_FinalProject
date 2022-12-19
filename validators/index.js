@@ -80,3 +80,46 @@ exports.checkBlogparams =(title,body,date)=>{
     }
 
 }
+
+exports.checkRecipe = ( RecipeName ,Category,SubstituteDiet) =>{
+
+    if(!RecipeName  ){
+        return "Error: Recipe Name required";
+    }
+
+    if (!(typeof RecipeName == 'string') ){
+        return ("Error: RecipeName should be a string  ")
+    }
+    
+    if (RecipeName == null || RecipeName.trim() === ''){
+        return "RecipeName parameter is empty";
+        
+    }
+    if(!Category  ){
+        return "Error: Recipe Name required";
+    }
+
+    if (!(typeof Category == 'string') ){
+        return ("Error: RecipeName should be a string  ")
+    }
+    
+    if (Category == null || Category.trim() === ''){
+        return "RecipeName parameter is empty";
+        
+    }
+    if(!SubstituteDiet  ){
+        return "Error: Recipe Name required";
+    }
+
+    if (!(typeof SubstituteDiet == 'string') ){
+        return ("Error: RecipeName should be a string  ")
+    }
+    
+    if (SubstituteDiet == null || SubstituteDiet.trim() === ''){
+        return "RecipeName parameter is empty";
+        
+    }
+    
+    
+
+}

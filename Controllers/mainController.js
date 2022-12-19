@@ -7,17 +7,34 @@ const validators = require('../validators');
 
 exports.Homepage = async(req,res)=>{
 
-    res.json({msg : "this will the home page of the application"})
+    let session = req.session.user;
+    let user = req.session.username;
+
+    if(session){
+        res.render('Home',{title:"home page",isAuth: true , user:user});
+
+    }
+    else{
+        res.render('Home',{title:"home page",isAuth: false});
+    }
+
+
 }
 
 exports.loginRoute = async(req,res)=> {
     const session = req.session.user;
     if (session) {
-        res.redirect('/private');
+
+        res.render('Home',{title : "Home Page" , isAuth : true});
+
         return;
     }
+    else{
+        res.render('login', { title : "Login Page" , isAuth : false });
 
-    res.render('login', { title : "Login Page" });
+    }
+
+    
  
 }
 exports.loginRouteOnPost = async (req,res) => {
@@ -33,16 +50,18 @@ exports.loginRouteOnPost = async (req,res) => {
     errors = validators.checkLogin(email,password);
 
     if(errors.length > 0){
-        res.json({"msg":"errors in login"});
+        hasErrors = true;
+        return;
     }
 
 
     const userres = await Users.findOne({email:email});
-    console.log(userres);
+    
     
         if(!userres){
             errors.push("No user found");
-            res.render('error',{errors:errors,hasErrors:true});
+            hasErrors = true;
+           // res.render('error',{errors:errors,hasErrors:true});
             return;
         }
 
@@ -53,13 +72,16 @@ exports.loginRouteOnPost = async (req,res) => {
     if(passwordflag){
              req.session.user = userres.email;
              req.session.userId = userres._id;
-             console.log(userres);
-             res.redirect('/private');
-           
+             req.session.username = userres.lastName;
+
+             let user = userres.lastName;
+             
+             //return res.redirect(req.originalUrl);
+              res.status(200).render('Home',{title : "Home Page" , isAuth : true , user : user ,errors : errors,hasErrors:hasErrors})
     }
     else{
         errors.push("password is wrong");
-        res.render('/login',{errors:errors,hasErrors:true});
+       // res.render('login',{errors:errors,hasErrors:true , isAuth:false});
     }
 
 }
@@ -75,7 +97,7 @@ exports.private = async (req,res)=>{
         }
         res.redirect('/newBlog');
         const title = `Welcome ${username}`;
-        res.render('private', {title : title });
+
     
 }
 
@@ -99,7 +121,7 @@ exports.signupRoutesOnPost = async (req,res ) =>{
     let password = reqbody.password;
     let firstName = reqbody.firstName;
     let lastName = reqbody.lastName;
-    let gender = reqbody.Gender;
+    let gender = reqbody.GENDER;
     let age = reqbody.age;
 
     
@@ -189,7 +211,7 @@ exports.signupRoutesOnPost = async (req,res ) =>{
                 res.status(500).render('login', { errors : "Internal Server Error", hasErrors : true, userInfo : newUser, title : "Sign Up Page" });
                 return;
             }
-            req.session.user = newUser.email;
+
             res.redirect('/login');
         
         }

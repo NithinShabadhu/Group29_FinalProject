@@ -28,7 +28,11 @@ app.use(
     secret: "This is a secret.. shhh don't tell anyone",
     saveUninitialized: true,
     resave: false,
-    cookie: { maxAge: 6000000 }
+
+    cookie: { 
+        httpOnly:true,
+        secure:true,
+        maxAge: 6000000 }
   })
 );
 
@@ -65,6 +69,25 @@ app.use('/newBlog',async(req,res,next)=>{
         }
     }
 });
+
+app.use('/Blog',async (req,res,next) =>{
+    if(req.session.userId){
+        next();
+    }
+    else{
+        if(req.method == 'GET'){
+           next();
+        }
+        else{
+            res.redirect('/login');
+        }
+    }
+});
+
+
+
+
+
 
 configRoutes(app);
 app.listen(3000, () => {

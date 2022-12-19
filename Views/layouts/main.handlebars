@@ -1,15 +1,69 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <title>{{title}}</title>
-    <link rel="stylesheet" href="/public/site.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="/public/css/site.css">
 </head>
 <body>
     <main>
+      <header>
+        <div class="topnav" id="myTopnav">
+           <a href="/">Home</a>
+           <a href="/Blogs">Blogs</a>
+           <a href = "/BMI"> BMI Calculator</a>
+           <a href="/CalorieCalculator">CalorieCalculator</a>
+             <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
+           <a href = "/dietplans"> Generate Diet Plans</a>
+
+
+           {{#if isAuth}}
+           
+           
+            <div class="dropdown">
+
+             <button class="dropbtn">Hi, {{user}}
+                   <i class="fa fa-caret-down"></i>
+             </button>
+              <div class="dropdown-content">
+                <a href="/editprofile"> Edit profile</a>
+                <a href="/myblogs"> My Blogs</a>
+                <a href="/mydietplans">My diet Plans</a>
+                <a href = "/logout"> Logout</a>
+               </div>
+            </div>
+            
+
+           {{else}}
+           
+           <a href="/Login" class="split">Log In/Register</a>
+
+           {{/if}}
+
+
+
+          
+
+            
+
+        
+          </div>
+
+</div>
+	</header>
         {{{body}}}
     </main>
-    <script src="/public/js/login.js"></script>
+    <script type="text/JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" ></script>
+    <script src = "/public/js/saveRecipe.js"></script>
+    <script src="/public/js/likes.js"></script>
+    <script src = "/public/js/BMI.js"></script>
+    <script src = "/public/js/login.js"></script>
+    <script src = "/public/js/CalorieCal.js"></script>
+    
 </body>
 
-</html>
+</html> 

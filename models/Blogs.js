@@ -8,7 +8,8 @@ const blogSchema = new mongoose.Schema({
     dateCreated : Date,
     picture : String,
     commentId : [{type : mongoose.Schema.Types.ObjectId, ref : 'Comments'}],
-  //  likes_count : Number
+    likes_count : Number,
+    
 
 });
 
